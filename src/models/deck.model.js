@@ -8,8 +8,14 @@ const deckSchema = new Schema({
   deckname: { type: String, required: true },
   dateCreated: { type: Date, required: true },
   createdByUser: { type: objectId, ref: 'users', required: true },
-  cards: [{ type: String, required: true }]
+  cards: [{ type: String, required: true }],
+  tags: [{ type: String, required: true }],
+  deleted: { type: Boolean, required: true, default: false },
+  flow: {
+    nodes: [{ type: Schema.Types.Mixed }],
+    edges: [{ type: Schema.Types.Mixed }],
+  }
 });
 
-const deck = mongoose.model('decks', deckSchema);
-module.exports = category;
+const deckModel = mongoose.model('decks', deckSchema);
+module.exports = deckModel;

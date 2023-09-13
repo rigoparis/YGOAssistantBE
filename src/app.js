@@ -1,4 +1,7 @@
 import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
 
 //Load environment variables
 import 'dotenv/config';
@@ -10,7 +13,10 @@ import './config/db.js';
 import apiRoutes from './routes/api.routes.js';
 
 const app = express();
+app.use(helmet())
 app.use(express.json());
+app.use(cors());
+app.use(morgan('combined'));
 
 //Use routes
 app.use('/api', apiRoutes);
