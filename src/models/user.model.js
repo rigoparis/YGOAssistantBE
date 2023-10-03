@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   _id: { type: objectId, auto: true },
   username: { type: String, required: true, unique: true},
   password: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
 });
 
 UserSchema.pre('save', function(next) {

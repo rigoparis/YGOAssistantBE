@@ -10,9 +10,21 @@ class UserController {
   }
   createUser = (req, res) => {
     const body = req.body;
+    console.log(body);
     userModel.create(body)
-    .then(user => res.status(StatusCodes.OK).send(user))
-    .catch(err => res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err));
+    .then(user => {
+      var token = jsonwebtoken.sign({
+        id: user.id
+      }, process.env.API_SECRET, {
+        expiresIn: 86400
+      });
+      console.log(user, token);
+      res.status(StatusCodes.OK).send({
+        user: user,
+        accessToken: token
+      })
+    })
+    .catch(err => res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message: "Username or email already in use"}));
   }
   login = async (req, res) => {
     try {
